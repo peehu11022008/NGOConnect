@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGOConnect - Find. Volunteer. Make an impact.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a href="#home" class="logo">NGOConnect</a>
+  <span class="slogan">Find. Volunteer. Make an impact.</span>
+  <a id="topLink" href="#profile">Profile •</a>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section class="view" id="v-home">
+    <div class="hero">
+      <h1>Find an NGO. Find your way to make a difference.</h1>
+      <p>Discover verified opportunities and volunteer where your help is needed.</p>
+      <form id="heroForm" class="searchbar">
+        <input id="q" placeholder="Search NGOs by name, cause or opportunity" aria-label="Search NGOs">
+        <a href="#location" class="loc">Location</a>
+      </form>
+    </div>
+    <div class="wrap">
+      <p class="box" id="season"></p>
+      <h2>Recommended for you</h2>
+      <p class="muted">NGOs with active volunteer opportunities and current community needs</p>
+      <div class="cards" id="recs"></div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="view wrap" id="v-search">
+    <h2>Search NGOs</h2>
+    <div class="box">
+      <input id="q2" placeholder="Search by name, cause or opportunity" aria-label="Search">
+      <details><summary>More filters</summary>
+        <label>Cause <select id="cause"><option value="">All causes</option></select></label>
+        <label>City <select id="city"><option value="">All cities</option></select></label>
+      </details>
+    </div>
+    <p class="muted" id="count"></p>
+    <div class="cards" id="results"></div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="view wrap" id="v-location">
+    <h2>NGOs near you</h2>
+    <div class="box">
+      <label>Distance: <b id="kmv">10 km</b>
+        <input type="range" id="km" min="2" max="50" value="10"></label>
+      <label>Start from <select id="area"></select></label>
+      <button class="btn o" id="useLoc" type="button">Use my location</button>
+      <p class="muted">Default area: Mumbai. Allow location access to use your position.</p>
+    </div>
+    <iframe id="map" title="Map of your area" loading="lazy"></iframe>
+    <div class="cards" id="near"></div>
+  </section>
+
+  <!-- NGO DETAILS (rendered by JS) -->
+  <section class="view wrap" id="v-ngo"></section>
+
+  <!-- LOGIN -->
+  <section class="view" id="v-login">
+    <div class="center">
+      <h1>Welcome back</h1>
+      <p class="muted">Sign in to find opportunities and make an impact.</p>
+      <div class="box form">
+        <p class="lbl">I am signing in as</p>
+        <div class="tog" id="roleTog"><button type="button" class="on" data-role="v">Volunteer / Student</button><button type="button" data-role="n">NGO</button></div>
+        <p class="lbl">Choose how you want to receive your OTP</p>
+        <div class="tog" id="chTog"><button type="button" class="on" data-ch="email">Email</button><button type="button" data-ch="phone">Phone</button></div>
+        <label><span id="idLbl">Email address</span><input id="l-id" placeholder="Enter your email address"><small class="err"></small></label>
+        <p class="lbl">One-time password (OTP)</p>
+        <div class="otp"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 1"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 2"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 3"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 4"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 5"><input class="ob" maxlength="1" inputmode="numeric" aria-label="OTP digit 6"></div>
+        <small class="muted" id="otpMsg">Enter the 6-digit OTP sent to you.</small>
+        <div class="row2"><button class="btn o" id="sendOtp" type="button">Send OTP</button><button class="btn" id="verify" type="button">Verify &amp; Continue</button></div>
+        <p class="center-t">New to NGOConnect? <a href="#register">Create an account</a></p>
+        <p class="center-t muted sm">Your OTP is used only to securely verify your account.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTER -->
+  <section class="view" id="v-register">
+    <div class="center">
+      <h1>Create your account</h1>
+      <div class="box form">
+        <div class="tog" id="regTog"><button type="button" class="on" data-reg="v">Volunteer / Student</button><button type="button" data-reg="n">NGO</button></div>
+        <div id="step1">
+          <p class="lbl">Step 1 of 2: Account details</p>
+          <label>Full name / NGO name<input id="r-name" data-r="name"><small class="err"></small></label>
+          <label>Email<input id="r-email" data-r="email"><small class="err"></small></label>
+          <label>Mobile (+91)<input id="r-phone" data-r="phone" inputmode="numeric" maxlength="10"><small class="err"></small></label>
+          <div data-for="v">
+            <label>Date of birth<input type="date" id="r-dob" data-r="dob"><small class="err"></small></label>
+            <label>City<input id="r-vcity" data-r="name" value="Mumbai"><small class="err"></small></label>
+            <label>Password<input type="password" id="r-pw" data-r="pw"><small class="err"></small></label>
+            <label>Confirm password<input type="password" id="r-pw2" data-r="pw2"><small class="err"></small></label>
+          </div>
+          <div data-for="n" hidden>
+            <label>Registration number<input id="r-regno" data-r="regno" placeholder="e.g. MH/2015/0012345"><small class="err"></small></label>
+            <label>Area of work<input id="r-cause" data-r="name"><small class="err"></small></label>
+            <label>City<input id="r-city" data-r="name" value="Mumbai"><small class="err"></small></label>
+            <label>Address<input id="r-addr" data-r="name"><small class="err"></small></label>
+            <label>About the NGO<textarea id="r-desc" rows="3"></textarea></label>
+          </div>
+          <div class="row2"><a class="btn o" href="#login">Cancel</a><button class="btn" id="nextBtn" type="button">Next</button></div>
+        </div>
+        <div id="step2" hidden>
+          <p class="lbl">Step 2 of 2: Volunteering details</p>
+          <div data-for="v">
+            <label>College / organisation<input id="r-college" data-r="name"><small class="err"></small></label>
+            <label>Course<select id="r-course"><option value="">Select course</option><option>B.Tech</option><option>BBA</option><option>B.Com</option><option>B.Sc</option><option>BA</option><option>Other</option></select></label>
+            <label>Year<select id="r-year"><option value="">Select year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option></select></label>
+            <p class="lbl">Skills</p><div class="grp"><label><input type="checkbox" name="skill" value="Teaching" checked>Teaching</label><label><input type="checkbox" name="skill" value="Event help" checked>Event help</label><label><input type="checkbox" name="skill" value="Social media">Social media</label><label><input type="checkbox" name="skill" value="First aid">First aid</label><label><input type="checkbox" name="skill" value="Photography">Photography</label></div>
+            <p class="lbl">Days you are available</p><div class="grp"><label><input type="checkbox" name="day" value="Mon-Fri">Mon-Fri</label><label><input type="checkbox" name="day" value="Sat">Sat</label><label><input type="checkbox" name="day" value="Sun">Sun</label></div>
+            <label>Preferred time of day<select id="r-slot"><option value="">Select time</option><option>Morning (7 AM - 12 PM)</option><option>Afternoon (12 PM - 4 PM)</option><option>Evening (4 PM - 8 PM)</option></select></label>
+            <label>Emergency contact name<input id="r-ename" data-r="name"><small class="err"></small></label>
+            <label>Emergency contact mobile<input id="r-ephone" data-r="phone" inputmode="numeric" maxlength="10"><small class="err"></small></label>
+            <label><input type="checkbox" id="same">Same as my mobile number</label>
+            <label>Why do you want to volunteer?<textarea id="r-why" rows="2"></textarea></label>
+            <label>ID proof (required: Aadhaar, PAN or passport)<input type="file" id="r-id" accept=".pdf,.jpg,.jpeg,.png"><small class="err" id="idErr"></small></label>
+            <label>College ID (optional)<input type="file" id="r-cid" accept=".pdf,.jpg,.jpeg,.png"></label>
+          </div>
+          <div data-for="n" hidden>
+            <p class="lbl">Documents you ask volunteers to provide</p>
+            <div class="grp"><label><input type="checkbox" name="ndoc" value="ID proof" checked>ID proof</label><label><input type="checkbox" name="ndoc" value="College ID">College ID</label><label><input type="checkbox" name="ndoc" value="Address proof">Address proof</label><label><input type="checkbox" name="ndoc" value="Resume">Resume</label><label><input type="checkbox" name="ndoc" value="Police verification">Police verification</label><label><input type="checkbox" name="ndoc" value="Medical fitness">Medical fitness</label></div>
+            <label>Volunteer time slots (comma separated)<input id="r-nslots" placeholder="Sat 9 AM - 12 PM, Sun 9 AM - 12 PM"></label>
+          </div>
+          <label><input type="checkbox" id="r-terms">I agree to the Terms and Privacy Policy</label>
+          <div class="row2"><button class="btn o" id="backBtn" type="button">Back</button><button class="btn" id="regBtn" type="button">Create account</button></div>
+        </div>
+        <p class="center-t">Already registered? <a href="#login">Sign in</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILE (rendered by JS) -->
+  <section class="view wrap" id="v-profile"></section>
+
+  <!-- MORE -->
+  <section class="view wrap" id="v-more">
+    <h2>More</h2>
+    <div class="box"><h3>About NGOConnect</h3><p>NGOConnect brings NGO discovery, volunteering, fundraising information and community awareness into one place, so it is easier to start contributing to causes you care about.</p></div>
+    <div class="box"><h3>Awareness</h3><p>Social service is more than donations. Giving a few hours, sharing a skill or spreading the word about an NGO also helps.</p></div>
+    <div class="box"><h3>FAQ</h3>
+      <details><summary>How do I volunteer?</summary><p>Open an NGO, choose a role under Volunteer Opportunities and select Apply. You need an account.</p></details>
+      <details><summary>How does OTP login work?</summary><p>Enter your email or phone, select Send OTP, then type the 6-digit code.</p></details>
+      <details><summary>How do donations work?</summary><p>Each NGO page shows how to contribute and the campaign progress.</p></details>
+      <details><summary>I run an NGO. How do I join?</summary><p><a href="#register">Create an account</a> and choose NGO.</p></details>
+    </div>
+    <div class="box"><h3>Contact</h3><p><a href="mailto:support@ngoconnect.example">support@ngoconnect.example</a></p></div>
+    <div class="box form"><h3>Feedback</h3>
+      <label>Your feedback<textarea id="fb" rows="3" placeholder="Tell us what worked and what did not"></textarea><small class="err"></small></label>
+      <button class="btn" id="fbBtn" type="button">Send feedback</button>
+    </div>
+  </section>
+</main>
+
+<nav class="bn" aria-label="Main">
+  <a href="#home" data-v="home">Home</a>
+  <a href="#search" data-v="search">Search</a>
+  <a href="#location" data-v="location">Location</a>
+  <a href="#profile" data-v="profile">Profile</a>
+  <a href="#more" data-v="more">More</a>
+</nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
